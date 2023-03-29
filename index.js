@@ -16,8 +16,11 @@ const chart = (data) => {
     coordinates.x.legend.length = xLegend.length;
     coordinates.y.legend.length = yLegend.length;
 
+    coordinates.x.size =
+      3 + coordinates.x.legend.length + (coordinates.x.max + 1) * 6; // <space> + legend + <space> + ((max x + 1) * 6) + 1
+    coordinates.y.size =
+      3 + coordinates.y.max; // <border> + max y + <border> + <legend>
     // TODO: calculate x and y axis legend start points
-    // TODO: calculate overall x and y dimensions
 
     return coordinates;
   };
