@@ -1,4 +1,5 @@
 const chart = (data) => {
+  const createKey = (x, y) => `[${x},${y}]`;
   const makeSpaces = (num) => Array(num).fill(" ").join("");
   // calculate key values
   const calculateKeyValues = () => {
@@ -41,6 +42,10 @@ const chart = (data) => {
   };
   // render chart
   const render = (values, data) => {
+    // convert data array to Map
+    const dataMap = new Map(
+      data.map((current) => [createKey(current[0], current[1]), undefined])
+    );
     // render rows
     for (let row = values.y.size - 1; row >= 0; row--) {
       // render y legend
@@ -51,9 +56,7 @@ const chart = (data) => {
       // render columns
       let columns = "";
       for (let col = 0; col <= values.x.max; col++) {
-        const first = data.find(
-          (current) => current[0] === col && current[1] === row
-        )
+        const first = dataMap.has(createKey(col, row))
           ? "*"
           : row === 0 || row === values.y.size - 1 || col === 0
           ? "+"
@@ -66,6 +69,7 @@ const chart = (data) => {
     }
     // render x legend
     const spaces = makeSpaces(values.x.legend.position[0]);
+
     console.log(`${spaces}${values.x.legend.text}`);
   };
 
