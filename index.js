@@ -1,7 +1,7 @@
 const displayChart = (coordinates) => {
   const COLUMN_WIDTH = 6;
   const getKey = (x, y) => `[${x},${y}]`;
-  const makeSpaces = (num) => Array(num).fill(" ").join("");
+  const getSequenceString = (num, char = " ") => Array(num).fill(char).join("");
   // calculate key values
   const getConfig = (coordinates) => {
     const config = {
@@ -48,23 +48,27 @@ const displayChart = (coordinates) => {
       const legend =
         row === config.y.legend.position[1]
           ? ` ${config.y.legend.text} `
-          : makeSpaces(config.y.legend.text.length + 2);
+          : getSequenceString(config.y.legend.text.length + 2);
       // render columns
       let columns = "";
+      
       for (let col = 0; col <= config.x.max; col++) {
         const first = dataMap.has(getKey(col, row))
           ? "*"
           : row === 0 || row === config.y.size - 1 || col === 0
           ? "+"
           : " ";
-        const rest = row === 0 || row === config.y.size - 1 ? "-----" : "     ";
+        const rest =
+          row === 0 || row === config.y.size - 1
+            ? getSequenceString(5, "-")
+            : getSequenceString(5);
 
         columns = `${columns}${first}${rest}`;
       }
       console.log(`${legend}${columns}+`);
     }
     // render x legend
-    const spaces = makeSpaces(config.x.legend.position[0]);
+    const spaces = getSequenceString(config.x.legend.position[0]);
 
     console.log(`${spaces}${config.x.legend.text}`);
   };
