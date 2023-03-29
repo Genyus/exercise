@@ -1,9 +1,12 @@
 const chart = (data) => {
   // calculate key values
   const calculateKeyValues = () => {
-    const coordinates = { x: { legend: {} }, y: { legend: {} } };
     const xLegend = "time";
     const yLegend = "£";
+    const coordinates = {
+      x: { legend: { text: xLegend } },
+      y: { legend: { text: yLegend } },
+    };
 
     // calculate max x and max y values
     coordinates.x.max = data.reduce(
@@ -15,21 +18,17 @@ const chart = (data) => {
       0
     );
 
-    // calculate x and y axis legend lengths
-    coordinates.x.legend.length = xLegend.length;
-    coordinates.y.legend.length = yLegend.length;
-
     // calculate overall x and y dimensions
     coordinates.x.size =
-      3 + coordinates.x.legend.length + (coordinates.x.max + 1) * 6; // <space> + legend + <space> + ((max x + 1) * 6) + 1
+      3 + coordinates.x.legend.text.length + (coordinates.x.max + 1) * 6; // <space> + legend + <space> + ((max x + 1) * 6) + 1
     coordinates.y.size = 3 + coordinates.y.max; // <border> + max y + <border> + <legend>
 
     // calculate x and y axis legend start points
     coordinates.x.legend.position = [
       2 +
-        coordinates.y.legend.length +
+        coordinates.y.legend.text.length +
         (coordinates.x.max + 1) * 3 -
-        Math.floor(coordinates.x.legend.length / 2),
+        Math.floor(coordinates.x.legend.text.length / 2),
       coordinates.y.size - 1,
     ];
     coordinates.y.legend.position = [
@@ -39,12 +38,39 @@ const chart = (data) => {
 
     return coordinates;
   };
-  const keyValues = calculateKeyValues();
   // TODO: render chart
-  //      TODO: render rows
-  //          TODO: render y legend
-  //          TODO: render columns
-  //      TODO: render x legend
+  const render = (values, data) => {
+    // render rows
+    for (let row = values.y.size - 1; row >= 0; row--) {
+      // render y legend
+      const legend =
+        row === values.y.legend.position[1]
+          ? ` ${values.y.legend.text} `
+          : Array(values.y.legend.text.length + 2)
+              .fill(" ")
+              .join("");
+      // render columns
+      let columns = "";
+      for (let col = 0; col <= values.x.max; col++) {
+        const first = data.find(
+          (current) => current[0] === col && current[1] === row
+        )
+          ? "*"
+          : row === 0 || row === values.y.size - 1 || col === 0
+          ? "+"
+          : " ";
+        const rest = row === 0 || row === values.y.size - 1 ? "-----" : "     ";
+
+        columns = `${columns}${first}${rest}`;
+      }
+      console.log(`${legend}${columns}+`);
+    }
+    // render x legend
+    const spaces = Array(values.x.legend.position[0]).fill(" ").join("");
+    console.log(`${spaces}${values.x.legend.text}`);
+  };
+
+  render(calculateKeyValues(), data);
 };
 const data = [
   [1, 2],
