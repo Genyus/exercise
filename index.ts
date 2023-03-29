@@ -1,4 +1,4 @@
-type Coordinate = [number, number];
+type Point = [number, number];
 type ChartConfig = {
   x: {
     legend: {
@@ -18,24 +18,24 @@ type ChartConfig = {
   };
 };
 
-const displayChart = (coordinates: Coordinate[]): void => {
+const displayChart = (points: Point[]): void => {
   const COLUMN_WIDTH = 6;
   const getKey = (x: number, y: number): string => `[${x},${y}]`;
   const getSequenceString = (num: number, char: string = " "): string =>
     Array(num).fill(char).join("");
   // calculate key values
-  const getConfig = (coordinates: Coordinate[]): ChartConfig => {
+  const getConfig = (points: Point[]): ChartConfig => {
     const config: ChartConfig = {
       x: { legend: { text: "time" } },
       y: { legend: { text: "£" } },
     };
 
     // calculate max x and max y values
-    config.x.max = coordinates.reduce(
+    config.x.max = points.reduce(
       (max, current) => (current[0] > max ? current[0] : max),
       0
     );
-    config.y.max = coordinates.reduce(
+    config.y.max = points.reduce(
       (max, current) => (current[1] > max ? current[1] : max),
       0
     );
@@ -58,10 +58,10 @@ const displayChart = (coordinates: Coordinate[]): void => {
     return config;
   };
   // render chart
-  const render = (config: ChartConfig, data: Coordinate[]): void => {
+  const render = (config: ChartConfig, points: Point[]): void => {
     // convert data array to Map
     const dataMap = new Map(
-      data.map((current) => [getKey(current[0], current[1]), undefined])
+      points.map((current) => [getKey(current[0], current[1]), undefined])
     );
     // render rows
     for (let row = config.y.size! - 1; row >= 0; row--) {
@@ -94,10 +94,10 @@ const displayChart = (coordinates: Coordinate[]): void => {
     console.log(`${spaces}${config.x.legend.text}`);
   };
 
-  render(getConfig(coordinates), coordinates);
+  render(getConfig(points), points);
 };
 
-const data: Coordinate[] = [
+const data: Point[] = [
   [1, 2],
   [2, 3],
   [3, 1],
