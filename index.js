@@ -1,4 +1,5 @@
 const chart = (data) => {
+  const makeSpaces = (num) => Array(num).fill(" ").join("");
   // calculate key values
   const calculateKeyValues = () => {
     const xLegend = "time";
@@ -38,7 +39,7 @@ const chart = (data) => {
 
     return coordinates;
   };
-  // TODO: render chart
+  // render chart
   const render = (values, data) => {
     // render rows
     for (let row = values.y.size - 1; row >= 0; row--) {
@@ -46,9 +47,7 @@ const chart = (data) => {
       const legend =
         row === values.y.legend.position[1]
           ? ` ${values.y.legend.text} `
-          : Array(values.y.legend.text.length + 2)
-              .fill(" ")
-              .join("");
+          : makeSpaces(values.y.legend.text.length + 2);
       // render columns
       let columns = "";
       for (let col = 0; col <= values.x.max; col++) {
@@ -66,7 +65,7 @@ const chart = (data) => {
       console.log(`${legend}${columns}+`);
     }
     // render x legend
-    const spaces = Array(values.x.legend.position[0]).fill(" ").join("");
+    const spaces = makeSpaces(values.x.legend.position[0]);
     console.log(`${spaces}${values.x.legend.text}`);
   };
 
