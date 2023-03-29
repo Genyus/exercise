@@ -31,10 +31,7 @@ const displayChart = (coordinates) => {
         Math.floor(config.x.legend.text.length / 2),
       config.y.size - 1,
     ];
-    config.y.legend.position = [
-      1,
-      Math.floor((config.y.max + 1) / 2),
-    ];
+    config.y.legend.position = [1, Math.floor(config.y.max / 2) + 1];
 
     return config;
   };
