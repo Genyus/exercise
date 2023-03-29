@@ -98,13 +98,17 @@ const displayChart = (points: Point[]): void => {
     const dataMap = new Map(
       points.map((current) => [getKey(current[0], current[1]), undefined])
     );
+    const legendSequence = getSequenceString(config.y.legend.text.length + 2);
+    const borderSequence = getSequenceString(COLUMN_WIDTH - 1, "-");
+    const cellSequence = getSequenceString(COLUMN_WIDTH - 1);
+
     // render rows
     for (let row = config.y.size! - 1; row >= 0; row--) {
       // render y legend
       const legend =
         row === config.y.legend.position![1]
           ? ` ${config.y.legend.text} `
-          : getSequenceString(config.y.legend.text.length + 2);
+          : legendSequence;
       // render columns
       let columns = "";
 
@@ -116,8 +120,8 @@ const displayChart = (points: Point[]): void => {
           : " ";
         const rest =
           row === 0 || row === config.y.size! - 1
-            ? getSequenceString(5, "-")
-            : getSequenceString(5);
+            ? borderSequence
+            : cellSequence;
 
         columns = `${columns}${first}${rest}`;
       }
