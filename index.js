@@ -1,10 +1,11 @@
 const chart = (data) => {
-  // TODO: calculate key values
+  // calculate key values
   const calculateKeyValues = () => {
     const coordinates = { x: { legend: {} }, y: { legend: {} } };
     const xLegend = "time";
     const yLegend = "£";
 
+    // calculate max x and max y values
     coordinates.x.max = data.reduce(
       (max, current) => (current[0] > max ? current[0] : max),
       0
@@ -13,18 +14,32 @@ const chart = (data) => {
       (max, current) => (current[1] > max ? current[1] : max),
       0
     );
+
+    // calculate x and y axis legend lengths
     coordinates.x.legend.length = xLegend.length;
     coordinates.y.legend.length = yLegend.length;
 
+    // calculate overall x and y dimensions
     coordinates.x.size =
       3 + coordinates.x.legend.length + (coordinates.x.max + 1) * 6; // <space> + legend + <space> + ((max x + 1) * 6) + 1
-    coordinates.y.size =
-      3 + coordinates.y.max; // <border> + max y + <border> + <legend>
-    // TODO: calculate x and y axis legend start points
+    coordinates.y.size = 3 + coordinates.y.max; // <border> + max y + <border> + <legend>
+
+    // calculate x and y axis legend start points
+    coordinates.x.legend.position = [
+      2 +
+        coordinates.y.legend.length +
+        (coordinates.x.max + 1) * 3 -
+        Math.floor(coordinates.x.legend.length / 2),
+      coordinates.y.size - 1,
+    ];
+    coordinates.y.legend.position = [
+      1,
+      Math.floor((coordinates.y.max + 1) / 2),
+    ];
 
     return coordinates;
   };
-  calculateKeyValues();
+  const keyValues = calculateKeyValues();
   // TODO: render chart
   //      TODO: render rows
   //          TODO: render y legend
