@@ -2,20 +2,18 @@ const displayChart = (coordinates) => {
   const getKey = (x, y) => `[${x},${y}]`;
   const makeSpaces = (num) => Array(num).fill(" ").join("");
   // calculate key values
-  const getConfig = () => {
-    const xLegend = "time";
-    const yLegend = "£";
+  const getConfig = (coordinates) => {
     const config = {
       x: { legend: { text: xLegend } },
       y: { legend: { text: yLegend } },
     };
 
     // calculate max x and max y values
-    config.x.max = config.reduce(
+    config.x.max = coordinates.reduce(
       (max, current) => (current[0] > max ? current[0] : max),
       0
     );
-    config.y.max = config.reduce(
+    config.y.max = coordinates.reduce(
       (max, current) => (current[1] > max ? current[1] : max),
       0
     );
@@ -73,7 +71,7 @@ const displayChart = (coordinates) => {
     console.log(`${spaces}${config.x.legend.text}`);
   };
 
-  render(getConfig(), coordinates);
+  render(getConfig(coordinates), coordinates);
 };
 const data = [
   [1, 2],
