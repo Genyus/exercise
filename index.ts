@@ -1,4 +1,11 @@
+/**
+ * Represents a single point as [x,y] coordinates
+ */
 type Point = [number, number];
+
+/**
+ * Represents the configuration of the chart to be displayed
+ */
 type ChartConfig = {
   x: {
     legend: {
@@ -18,12 +25,35 @@ type ChartConfig = {
   };
 };
 
+/**
+ * Displays a chart for the given points
+ * @param points An array of points
+ */
 const displayChart = (points: Point[]): void => {
   const COLUMN_WIDTH = 6;
+
+  /**
+   * Gets a string key for a pair of coordinates
+   * @param x The X coordinate
+   * @param y The Y coordinate
+   * @returns The key 
+   */
   const getKey = (x: number, y: number): string => `[${x},${y}]`;
-  const getSequenceString = (num: number, char: string = " "): string =>
-    Array(num).fill(char).join("");
-  // calculate key values
+
+  /**
+   * Gets a string containing a single-character sequence
+   * @param length The length of the sequence
+   * @param char The character to be repeated in sequence
+   * @returns The character sequence
+   */
+  const getSequenceString = (length: number, char: string = " "): string =>
+    Array(length).fill(char).join("");
+  
+  /**
+   * Gets the configuration values for the chart
+   * @param points The array of points to be charted
+   * @returns The configuration object
+   */
   const getConfig = (points: Point[]): ChartConfig => {
     const config: ChartConfig = {
       x: { legend: { text: "time" } },
@@ -57,7 +87,12 @@ const displayChart = (points: Point[]): void => {
 
     return config;
   };
-  // render chart
+  
+  /**
+   * Renders the chart
+   * @param config The configuration object
+   * @param points The points array to be rendered
+   */
   const render = (config: ChartConfig, points: Point[]): void => {
     // convert data array to Map
     const dataMap = new Map(
