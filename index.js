@@ -1,11 +1,12 @@
 const displayChart = (coordinates) => {
+  const COLUMN_WIDTH = 6;
   const getKey = (x, y) => `[${x},${y}]`;
   const makeSpaces = (num) => Array(num).fill(" ").join("");
   // calculate key values
   const getConfig = (coordinates) => {
     const config = {
-      x: { legend: { text: xLegend } },
-      y: { legend: { text: yLegend } },
+      x: { legend: { text: "time" } },
+      y: { legend: { text: "£" } },
     };
 
     // calculate max x and max y values
@@ -20,14 +21,14 @@ const displayChart = (coordinates) => {
 
     // calculate overall x and y dimensions
     config.x.size =
-      3 + config.x.legend.text.length + (config.x.max + 1) * 6; // <space> + legend + <space> + ((max x + 1) * 6) + 1
+      3 + config.x.legend.text.length + (config.x.max + 1) * COLUMN_WIDTH; // <space> + legend + <space> + ((max x + 1) * 6) + 1
     config.y.size = 3 + config.y.max; // <border> + max y + <border> + <legend>
 
     // calculate x and y axis legend start points
     config.x.legend.position = [
       2 +
         config.y.legend.text.length +
-        (config.x.max + 1) * 3 -
+        Math.floor(((config.x.max + 1) * COLUMN_WIDTH) / 2) -
         Math.floor(config.x.legend.text.length / 2),
       config.y.size - 1,
     ];
