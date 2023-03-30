@@ -34,16 +34,6 @@ func displayChart(points: [Point]) {
     }
     
     /**
-     * Gets a string containing a single-character sequence
-     * - parameter length: The length of the sequence
-     * - parameter char: The character to be repeated in sequence
-     * - returns: The character sequence
-     */
-    func getSequenceString(length: Int, char: Character = " ") -> String {
-        return String(repeating: char, count: length)
-    }
-    
-    /**
      * Gets the configuration values for the chart
      * - parameter points: The array of points to be charted
      * - returns: The configuration object
@@ -83,9 +73,9 @@ func displayChart(points: [Point]) {
     func render(config: ChartConfig, points: [Point]) {
         // Convert data array to Set
         let dataSet: Set<String> = Set(points.map { getKey(x: $0.x, y: $0.y) })
-        let legendSequence = getSequenceString(length: config.y.legend.text.count + 2)
-        let borderSequence = getSequenceString(length: COLUMN_WIDTH - 1, char: "-")
-        let cellSequence = getSequenceString(length: COLUMN_WIDTH - 1)
+        let legendSequence = String(repeating: " ", count: config.y.legend.text.count + 2)
+        let borderSequence = String(repeating: "*", count: COLUMN_WIDTH - 1)
+        let cellSequence = String(repeating: " ", count: COLUMN_WIDTH - 1)
         
         // Render rows
         for row in (0...config.y.size! - 1).reversed() {
@@ -125,7 +115,7 @@ func displayChart(points: [Point]) {
         }
         
         // Render x legend
-        let spaces = getSequenceString(length: config.x.legend.position!.x)
+        let spaces = String(repeating: " ", count: config.x.legend.position!.x)
         print("\(spaces)\(config.x.legend.text)")
     }
     

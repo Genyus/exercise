@@ -39,15 +39,6 @@ const displayChart = (points: Point[]): void => {
    * @returns The key 
    */
   const getKey = (x: number, y: number): string => `[${x},${y}]`;
-
-  /**
-   * Gets a string containing a single-character sequence
-   * @param length The length of the sequence
-   * @param char The character to be repeated in sequence
-   * @returns The character sequence
-   */
-  const getSequenceString = (length: number, char: string = " "): string =>
-    Array(length).fill(char).join("");
   
   /**
    * Gets the configuration values for the chart
@@ -98,9 +89,9 @@ const displayChart = (points: Point[]): void => {
     const dataMap = new Map(
       points.map((current) => [getKey(current[0], current[1]), undefined])
     );
-    const legendSequence = getSequenceString(config.y.legend.text.length + 2);
-    const borderSequence = getSequenceString(COLUMN_WIDTH - 1, "-");
-    const cellSequence = getSequenceString(COLUMN_WIDTH - 1);
+    const legendSequence = " ".repeat(config.y.legend.text.length + 2);
+    const borderSequence = "-".repeat(COLUMN_WIDTH - 1);
+    const cellSequence = " ".repeat(COLUMN_WIDTH - 1);
 
     // render rows
     for (let row = config.y.size! - 1; row >= 0; row--) {
@@ -128,7 +119,7 @@ const displayChart = (points: Point[]): void => {
       console.log(`${legend}${columns}+`);
     }
     // render x legend
-    const spaces = getSequenceString(config.x.legend.position![0]);
+    const spaces = " ".repeat(config.x.legend.position![0]);
 
     console.log(`${spaces}${config.x.legend.text}`);
   };
