@@ -64,7 +64,7 @@ const displayChart = (points: Point[]): void => {
     // calculate overall x and y dimensions
     config.x.size =
       3 + config.x.legend.text.length + (config.x.max! + 1) * COLUMN_WIDTH; // <space> + legend + <space> + ((max x + 1) * 6) + 1
-    config.y.size = 3 + config.y.max!; // <border> + max y + <border> + <legend>
+    config.y.size = 2 + config.y.max!; // <border> + (max y - 1) + <border> + <legend>
 
     // calculate x and y axis legend start points
     config.x.legend.position = [

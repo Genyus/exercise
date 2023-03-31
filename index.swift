@@ -50,7 +50,7 @@ func displayChart(points: [Point]) {
         
         // Calculate overall x and y dimensions
         config.x.size = 3 + config.x.legend.text.count + (config.x.max! + 1) * COLUMN_WIDTH
-        config.y.size = 3 + config.y.max!
+        config.y.size = 2 + config.y.max!
         
         // Calculate x and y axis legend start points
         config.x.legend.position = (
