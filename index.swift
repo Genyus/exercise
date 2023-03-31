@@ -6,7 +6,7 @@ struct ChartConfig {
     struct Axis {
         struct Legend {
             let text: String
-            var position: (x: Int, y: Int)?
+            var position: Point?
         }
         var legend: Legend
         var max: Int?

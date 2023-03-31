@@ -4,25 +4,23 @@
 type Point = [number, number];
 
 /**
+ * Represents a single axis of a chart
+ */
+type Axis = {
+    legend: {
+      text: string;
+      position?: Point;
+    };
+    max?: number;
+    size?: number;
+  };
+
+/**
  * Represents the configuration of the chart to be displayed
  */
 type ChartConfig = {
-  x: {
-    legend: {
-      text: string;
-      position?: [number, number];
-    };
-    max?: number;
-    size?: number;
-  };
-  y: {
-    legend: {
-      text: string;
-      position?: [number, number];
-    };
-    max?: number;
-    size?: number;
-  };
+  x: Axis;
+  y: Axis;
 };
 
 /**
